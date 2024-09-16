@@ -176,62 +176,9 @@ type GenPrivateKey interface {
 	GenPrivateKey() *ECPrivateKey
 }
 
-//
-//func main() {
-//	// NIST parameters
-//	// p -> Prime
-//	// a, b -> y^2 =  x^3 + ax + b
-//	// gx, gy -> (x, y) coordinates of base point
-//	// n -> Order of BASE POINT
-//	//p, _ := new(big.Int).SetString("71", 10)
-//	//n, _ := new(big.Int).SetString("71", 16)
-//	//b, _ := new(big.Int).SetString("7", 10)
-//	//a, _ := new(big.Int).SetString("0", 10)
-//	//gx, _ := new(big.Int).SetString("6", 10)
-//	//gy, _ := new(big.Int).SetString("9", 10)
-//	//
-//	//params := &ECParameters{
-//	//	P:  p,
-//	//	N:  n,
-//	//	A:  a,
-//	//	B:  b,
-//	//	Gx: gx,
-//	//	Gy: gy,
-//	//}
-//
-//	curve := X25519()
-//	fmt.Printf("%x\n",curve.B)
-//
-//	// Private key
-//	//d := new(big.Int).SetUint64(mr.Uint64N(30))
-//	//privateKey := &ECPrivateKey{
-//	//	D: d,
-//	//}
-//	//fmt.Printf("Private Key (base10): %s\n", d.String())
-//	//
-//	//// Public Key
-//	//privateKey.PublicKey.X, privateKey.PublicKey.Y = scalarMult(params.Gx, params.Gy, privateKey.D, params.P, params.A)
-//	//fmt.Printf("Public Key x (base10) : %s\n", privateKey.PublicKey.X.String())
-//	//fmt.Printf("Public Key y (base10) : %s\n", privateKey.PublicKey.Y.String())
-//	//
-//	//// Sign
-//	//message := []byte("Hello, ECDSA!")
-//	//signature, err := Sign(privateKey, message, params)
-//	//if err != nil {
-//	//	panic(err)
-//	//}
-//	//fmt.Printf("\n\nMessage: %s\n", message)
-//	//fmt.Printf("Signature (r, s):\n r (base10) = %d\n s (base10) = %d\n", signature.R, signature.S)
-//	//
-//	//// Validate signature
-//	//valid, err := Verify(&privateKey.PublicKey, message, signature, params)
-//	//if err != nil {
-//	//	panic(err)
-//	//}
-//	//
-//	//if valid {
-//	//	fmt.Println("Signature is valid")
-//	//} else {
-//	//	fmt.Println("Signature is invalid")
-//	//}
-//}
+// GenerateRandomBytes Function returns an array with random bytes of a given size
+func GenerateRandomBytes(numberbytes uint) []byte {
+	randombytes := make([]byte, numberbytes)
+	rand.Read(randombytes)
+	return randombytes[:]
+}
