@@ -15,7 +15,7 @@ type ECPrivateKey struct {
 	PublicKey *Point
 }
 
-//GetSecp256k1Parametes returns the parameters for the SECP256K1 curve
+// GetSecp256k1Parametes returns the parameters for the SECP256K1 curve
 func GetSecp256k1Parametes() *Secp256k1 {
 
 	p, _ := new(big.Int).SetString("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
@@ -58,7 +58,7 @@ func (E *Secp256k1) GeneratePrivateKey() (*ECPrivateKey, error) {
 	return &privateKey, err
 }
 
-//GeneratePublicKey computes the public key from private key and returns the X, Y coordinates
+// GeneratePublicKey computes the public key from private key and returns the X, Y coordinates
 func (key *ECPrivateKey) GeneratePublicKey() *Point {
 
 	pt2 := ScalarMult(key.D, key.curve.BasePoint, key.curve)
@@ -70,7 +70,7 @@ func (key *ECPrivateKey) GeneratePublicKey() *Point {
 
 }
 
-//ECDH Runs the ECDH and returns the shared key X,Y coordinates
+// ECDH Runs the ECDH and returns the shared key X,Y coordinates
 func (key *ECPrivateKey) ECDH(public *Point) *Point {
 	result := ScalarMult(key.D, public, key.curve)
 
