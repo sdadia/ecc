@@ -1,6 +1,9 @@
 package ecc
 
-import "math/big"
+import (
+	"errors"
+	"math/big"
+)
 
 type Secp256r1 struct {
 	*ECParams
@@ -21,17 +24,37 @@ func GetSecp256r1Parameters() *Secp256r1 {
 	return &curveParams
 }
 
+func (E *Secp256r1) IsValidPrivateKey(key *ECPrivateKey) bool {
+	// If 1 < key < n then valid else invalid78919850240963748110675029416502060938178102871195239984330800772548425541415
+	if (E.N.Cmp(key.D) == 1) && (key.D.Cmp(new(big.Int).SetInt64(0)) == 1) {
+		return true
+	}
+	return false
+}
+
 // GeneratePrivateKey generates at new 32 byte key
 func (E *Secp256r1) GeneratePrivateKey() (*ECPrivateKey, error) {
 
-	// generate random 32 bytes
-	randomBytes, err := GenerateRandomBytes(32)
+	// Iterate till you find a valid private key
+	const MAX_ITER = 100
+	iter := 0
+	for {
+		iter += 1
 
-	// Initialize private key
-	privateKey := ECPrivateKey{D: new(big.Int).SetBytes(randomBytes), curve: E.ECParams, PublicKey: &Point{}}
+		// generate random 32 bytes
+		randomBytes, err := GenerateRandomBytes(32)
 
-	// Do scalar multiplication
-	privateKey.GeneratePublicKey()
+		// Initialize private key
+		privateKey := ECPrivateKey{D: new(big.Int).SetBytes(randomBytes), curve: E.ECParams, PublicKey: &Point{}}
 
-	return &privateKey, err
+		// Return if valid private key
+		if E.IsValidPrivateKey(&privateKey) {
+			return &privateKey, err
+		}
+
+		// Quit if you cannot generate valid private key after MAX_ITER
+		if iter == MAX_ITER {
+			return &ECPrivateKey{}, errors.New("MAX ITERATION REACHED. Cannot generate private key")
+		}
+	}
 }

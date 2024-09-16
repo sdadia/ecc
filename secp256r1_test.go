@@ -75,3 +75,13 @@ func TestSecp256r1_ECDH(t *testing.T) {
 	}
 
 }
+
+func Test_5(t *testing.T) {
+	params := GetSecp256r1Parameters()
+	private, _ := params.GeneratePrivateKey()
+	k, _ := new(big.Int).SetString("68723157890145320692495568116166642669112879877694933024822127787343477052557", 10)
+	private.D.SetBytes(k.Bytes())
+	publicKey := private.GeneratePublicKey()
+
+	fmt.Println(publicKey)
+}

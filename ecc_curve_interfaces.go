@@ -31,6 +31,10 @@ type GeneratePrivateKey interface {
 	GeneratePrivateKey() (*ECPrivateKey, error)
 }
 
+type IsValidPrivateKey interface {
+	IsValidPrivateKey(key *ECPrivateKey) bool
+}
+
 type ECDH interface {
 	ECDH(public *Point) *Point
 }
