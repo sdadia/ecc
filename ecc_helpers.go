@@ -194,7 +194,12 @@ func ECDH(privateKey *ECPrivateKey, publicKey *ECPublicKey, params *ECParameters
 
 // GenPrivateKey Create an interface to private key generation depends on the curve we use
 type GenPrivatePublicKey interface {
-	GenPrivatePublicKey() *ECPrivateKey // Public Key is set internally accssed via ECPrivateKey.PrivateKey
+	GenPrivatePublicKey() (*ECPrivateKey, *ECPublicKey) // Public Key is not initliaized
+}
+
+// GenPrivateKey Create an interface to private key generation depends on the curve we use
+type DerivePublicKeyFromPrivate interface {
+	DerivePublicKeyFromPrivate(privateKey *ECPrivateKey) *ECPublicKey // Public Key is not initliaized
 }
 
 // GenerateRandomBytes Function returns an array with random bytes of a given size
