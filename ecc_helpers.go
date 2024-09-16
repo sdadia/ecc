@@ -8,6 +8,10 @@ import (
 )
 
 // ECParameters represents the domain parameters for ECDSA
+// p -> Prime
+// a, b -> y^2 =  x^3 + ax + b
+// gx, gy -> (x, y) coordinates of base point
+// n -> Order of BASE POINT
 type ECParameters struct {
 	P, N, A, B, Gx, Gy *big.Int
 }
@@ -20,6 +24,10 @@ type ECPrivateKey struct {
 
 // ECPublicKey represents an ECDSA public key
 type ECPublicKey struct {
+	X, Y *big.Int
+}
+
+type SharedSecret struct {
 	X, Y *big.Int
 }
 
@@ -171,9 +179,22 @@ func Verify(publicKey *ECPublicKey, message []byte, signature *ECDSASignature, p
 	return v.Cmp(signature.R) == 0, nil
 }
 
-// GenPrivateKey Create an interface as the private key generation depends on the curve we use
-type GenPrivateKey interface {
-	GenPrivateKey() *ECPrivateKey
+// ECDH performs diffie hellman key exchange to get the shared key
+func ECDH(privateKey *ECPrivateKey, publicKey *ECPublicKey, params *ECParameters) *SharedSecret {
+	// Public Key
+	var sharedSecret SharedSecret
+	sharedSecret.X, sharedSecret.Y = scalarMult(publicKey.X,
+		publicKey.Y,
+		privateKey.D,
+		params.P,
+		params.A)
+
+	return &sharedSecret
+}
+
+// GenPrivateKey Create an interface to private key generation depends on the curve we use
+type GenPrivatePublicKey interface {
+	GenPrivatePublicKey() *ECPrivateKey // Public Key is set internally accssed via ECPrivateKey.PrivateKey
 }
 
 // GenerateRandomBytes Function returns an array with random bytes of a given size

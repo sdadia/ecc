@@ -26,7 +26,7 @@ func X25519() *ECParameters {
 	}
 }
 
-func (E *ECParameters) GenPrivateKey() *ECPrivateKey {
+func (E *ECParameters) GenPrivatePublicKey() *ECPrivateKey {
 
 	// generate random 32 bytes
 	randombytes := make([]byte, 32)
