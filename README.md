@@ -1,5 +1,11 @@
 # ECC
 
+## Installation
+
+```bash
+go get -u github.com/sdadia/ecc
+```
+
 This code implements the basics of elliptical curve such as point addition, doubling, scalar multiplication etc
 
 ```
