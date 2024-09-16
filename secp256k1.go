@@ -1,18 +1,11 @@
 package ecc
 
 import (
-	"crypto/rand"
 	"math/big"
 )
 
 type Secp256k1 struct {
 	*ECParams
-}
-
-type ECPrivateKey struct {
-	D         *big.Int
-	curve     *ECParams
-	PublicKey *Point
 }
 
 // GetSecp256k1Parametes returns the parameters for the SECP256K1 curve
@@ -31,16 +24,6 @@ func GetSecp256k1Parametes() *Secp256k1 {
 
 	return &(curveParams)
 
-}
-
-// GenerateRandomBytes generates a random array of 32 bytes.
-func GenerateRandomBytes(numBytes int) ([]byte, error) {
-	var randomBytes = make([]byte, numBytes)
-	_, err := rand.Read(randomBytes[:]) // Fill the byte array with random data
-	if err != nil {
-		return randomBytes, err
-	}
-	return randomBytes, nil
 }
 
 // GeneratePrivateKey generates at new 32 byte key
