@@ -34,3 +34,21 @@ type GeneratePrivateKey interface {
 type ECDH interface {
 	ECDH(public *Point) *Point
 }
+
+// GeneratePublicKey computes the public key from private key and returns the X, Y coordinates
+func (key *ECPrivateKey) GeneratePublicKey() *Point {
+
+	result := key.ECDH(key.curve.BasePoint)
+
+	key.PublicKey.X = result.X
+	key.PublicKey.Y = result.Y
+
+	return key.PublicKey
+
+}
+
+// ECDH Runs the ECDH and returns the shared key X,Y coordinates
+func (key *ECPrivateKey) ECDH(public *Point) *Point {
+	result := ScalarMult(key.D, public, key.curve)
+	return result
+}

@@ -40,22 +40,3 @@ func (E *Secp256k1) GeneratePrivateKey() (*ECPrivateKey, error) {
 
 	return &privateKey, err
 }
-
-// GeneratePublicKey computes the public key from private key and returns the X, Y coordinates
-func (key *ECPrivateKey) GeneratePublicKey() *Point {
-
-	pt2 := ScalarMult(key.D, key.curve.BasePoint, key.curve)
-
-	key.PublicKey.X = pt2.X
-	key.PublicKey.Y = pt2.Y
-
-	return key.PublicKey
-
-}
-
-// ECDH Runs the ECDH and returns the shared key X,Y coordinates
-func (key *ECPrivateKey) ECDH(public *Point) *Point {
-	result := ScalarMult(key.D, public, key.curve)
-
-	return result
-}
