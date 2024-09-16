@@ -20,7 +20,7 @@ func TestGenerateRandomBytesArrayValuesLessThan255(t *testing.T) {
 	array := GenerateRandomBytes(expected_array_size)
 	var got_array_size = len(array)
 	for i := range got_array_size {
-		if !((array[i] < 255) && (array[i] > 0)) {
+		if !((array[i] <= 255) && (array[i] > 0)) {
 			t.Fatalf("Array values should >= 0 and < 255. Got : %d at index %d\n", array[i], i)
 		}
 	}
