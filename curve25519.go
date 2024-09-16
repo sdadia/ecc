@@ -6,7 +6,7 @@ import (
 )
 
 // X25519 Use this to create the code
-func X25519() *ECParameters {
+func Curve25519() *ECParameters {
 
 	p, _ := new(big.Int).SetString("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffed", 16)
 	n, _ := new(big.Int).SetString("1000000000000000000000000000000014def9dea2f79cd65812631a5cf5d3ed", 16)
