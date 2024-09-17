@@ -25,7 +25,7 @@ func GetSecp256r1Parameters() *Secp256r1 {
 }
 
 func (E *Secp256r1) IsValidPrivateKey(key *ECPrivateKey) bool {
-	// If 1 < key < n then valid else invalid78919850240963748110675029416502060938178102871195239984330800772548425541415
+	// If 1 < key < n then valid else invalid
 	if (E.N.Cmp(key.D) == 1) && (key.D.Cmp(new(big.Int).SetInt64(0)) == 1) {
 		return true
 	}
